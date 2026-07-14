@@ -1,0 +1,304 @@
+.navbar {
+  position: fixed;          /* acompana la pagina al hacer scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+.nosotrosSection {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 0 120px;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+
+  background-image:url('/nosotros/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.linesTop {
+  left: 0;
+  right: 0;
+  top: -140px;
+  height: 360px;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* asegura que el texto quede por encima de las líneas */
+}
+
+@media (max-width: 860px) {
+  .linesTop {
+    top: -80px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .linesTop {
+    top: -50px;
+    height: 150px;
+  }
+}
+
+
+.navbar * {
+  box-sizing: border-box;
+}
+
+/* ---------- Left: pentagon logo block (mas alto y por ENCIMA del menu) ---------- */
+.logoBox {
+  position: relative;
+  flex: 0 0 240px;
+  height: 132px;
+  /* margen negativo = ancho del corte diagonal, para que el menu quede
+     justo debajo de la diagonal (sin triangulo de foto = sin doble) */
+  margin-right: -92px;
+  background: #ffffff;
+  /* diagonal mas marcada -> se ve claramente el trapecio */
+  clip-path: polygon(0 0, 100% 0, 62% 100%, 0 100%);
+  /* drop-shadow (no box-shadow) para que la sombra siga la diagonal
+     y el logo se lea claramente por encima del menu */
+  filter: drop-shadow(6px 8px 14px rgba(0, 0, 0, 0.28));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 50px 5px 0px;
+  overflow: hidden;
+  z-index: 2;
+  transition: filter 0.4s ease;
+}
+
+.logoBoxScrolled {
+  /* opaco (sin backdrop-filter): el clip-path se mantiene nitido = trapecio SIEMPRE */
+  background: #ffffff;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- Right: barra de menu, pegada al techo ---------- */
+.menuBox {
+  flex: 1;
+  height: 88px;
+  align-self: flex-start;             /* pegada ARRIBA (al techo de la pagina) */
+  /* negro al inicio -> mas transparente con el scroll (alpha + blur los controla el JS/CSS var) */
+  background: rgba(18, 24, 27, var(--menu-bg-alpha, 0.92));
+  -webkit-backdrop-filter: blur(var(--menu-bg-blur, 0px));
+  backdrop-filter: blur(var(--menu-bg-blur, 0px));
+  /* transicion mas larga y con curva suave = el cambio se siente limpio, no de golpe */
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              -webkit-backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: background-color, backdrop-filter;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+  /* padding-left grande para compensar la parte que queda tapada por el logo */
+  padding: 0 40px 0 92px;
+  z-index: 1;
+}
+
+.linksWrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.links li {
+  margin: 0;
+  padding: 0;
+}
+
+.links a {
+  position: relative;
+  display: inline-flex;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  transform: scale(1);
+  gap: 6px;
+  align-items: center;
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.linkIcon {
+  flex-shrink: 0;
+  color: inherit;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.links a:hover .linkIcon {
+  transform: scale(1.1);
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #f2d27a, #d4af37);
+  transition: width 0.25s ease;
+}
+
+.links a:hover {
+  color: #e9cd83;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.55);
+  /* efecto de agrandamiento sutil */
+  transform: scale(1.08);
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+/* ---------- WhatsApp pill button ---------- */
+.whatsappBtn {
+  flex-shrink: 0;
+  /* naranja por defecto */
+  background: #e2792c;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transform: scale(1);
+  box-shadow: 0 0 0 rgba(226, 121, 44, 0);
+  transition: background 0.25s ease, color 0.25s ease,
+              transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease;
+}
+
+.whatsappIcon {
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.whatsappBtn:hover .whatsappIcon {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+.whatsappBtn:hover {
+  background: #f08a3c;
+  color: #ffffff;
+  /* se agranda un poco y brilla */
+  transform: translateY(-1px) scale(1.06);
+  box-shadow: 0 0 18px rgba(226, 121, 44, 0.65), 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Burger (mobile) ---------- */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .logoBox {
+    flex-basis: 150px;
+    height: 104px;
+    margin-right: -57px;
+    clip-path: polygon(0 0, 100% 0, 62% 100%, 0 100%);
+  }
+
+  .menuBox {
+    height: 74px;
+    padding: 0 20px 0 62px;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .linksWrap {
+    position: absolute;
+    top: 104px;
+    left: 0;
+    right: 0;
+    justify-content: stretch;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .linksOpen {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #12181b;
+    width: 100%;
+  }
+
+  .linksOpen li {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .linksOpen a {
+    display: block;
+    padding: 16px 28px;
+  }
+
+  .links a::after {
+    display: none;
+  }
+
+  .links a:hover {
+    transform: none;
+  }
+}

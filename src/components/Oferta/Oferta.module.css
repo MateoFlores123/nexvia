@@ -1,0 +1,238 @@
+.ofertaSection {
+  background: #ffffff;                /* combina con el desvanecido del hero */
+  padding: 96px 0 104px;
+  scroll-margin-top: 120px;          /* para que el nav fijo no tape el titulo al saltar a #oferta */
+  font-family: 'Inter', sans-serif;
+  color: #12181b;
+}
+
+.ofertaSection * {
+  box-sizing: border-box;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ---------- Encabezado ---------- */
+.head {
+  max-width: 640px;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e2792c;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #12181b;
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a5560;
+  margin: 0;
+}
+
+/* ---------- Grid de productos ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #e2792c;
+  box-shadow: 0 18px 40px rgba(18, 24, 27, 0.10);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: #eef1f3;
+  background-size: cover;
+  background-position: center;
+}
+
+.codigo {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #12181b;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px;
+}
+
+.marca {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e2792c;
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #12181b;
+}
+
+.cardText {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #55606b;
+  margin: 0 0 18px;
+}
+
+.cardLink {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e2792c;
+  text-decoration: none;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.cardLink:hover {
+  color: #c9631d;
+}
+
+/* Tarjeta "proximamente" */
+.cardSoon {
+  background: linear-gradient(160deg, #12181b, #1e272c);
+  border-color: transparent;
+  justify-content: center;
+}
+
+.cardSoon .cardTitle,
+.cardSoon .cardText {
+  color: #ffffff;
+}
+
+.cardSoon .cardText {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.soonBadge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #12181b;
+  background: #e2792c;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+/* ---------- Pilares ---------- */
+.pilares {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 28px 0 0;
+  border-top: 1px solid #ececec;
+}
+
+.pilar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pilarTitulo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #12181b;
+}
+
+.pilarTitulo::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: #e2792c;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.pilarTexto {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #55606b;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pilares {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ofertaSection {
+    padding: 72px 0 80px;
+  }
+
+  .inner {
+    padding: 0 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
