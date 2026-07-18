@@ -44,7 +44,10 @@ export default function Hero() {
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M0,640 C 480,720 960,500 1440,620 L1440,1000 L0,1000 Z" fill="#EDE8D0" />
+        
+          <path d="M0,640 C 480,720 960,500 1440,620 L1440,1000 L0,1000 Z" fill="#FAF7D4" />
+
+        
       </svg>
       
 
@@ -74,7 +77,7 @@ export default function Hero() {
         <div className={styles.flySubtitle}>
           <div className={styles.enterSubtitle}>
             <p className={styles.subtitle}>
-              Bolsas de aire Yitao: proteccion confiable y entregas a tiempo para tu operacion.
+              Repuestos para transporte pesado desde Arequipa: calidad constante y entregas a tiempo para tu operación.
             </p>
           </div>
         </div>

@@ -1,22 +1,160 @@
 /* Nosotros.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;600&display=swap');
+
+/* ======================================================================
+   SECCION + FONDO VIVO
+   ====================================================================== */
 .nosotrosSection {
   position: relative;
   width: 100%;
-  background: #ffffff;
   overflow: hidden;
   padding: 0 0 120px;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
+
+  /* fondo calido en capas (ya no es blanco plano) */
+  background:
+    linear-gradient(180deg, #fdfbf7 0%, #f7f3ec 45%, #f1ebe1 100%);
+
+  /* --- Tokens de la escalera de tarjetas --- */
+  --card-step: 60px;
+  --card-base: 250px;
 }
 
 .nosotrosSection * {
   box-sizing: border-box;
 }
 
+/* --- Aurora: manchas de color que respiran lentamente detras de todo --- */
+.nosotrosSection::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 18% 22%, rgba(226, 121, 44, 0.16), transparent 60%),
+    radial-gradient(34% 38% at 82% 30%, rgba(212, 175, 55, 0.18), transparent 60%),
+    radial-gradient(42% 46% at 62% 84%, rgba(18, 24, 27, 0.07), transparent 62%),
+    radial-gradient(30% 34% at 30% 76%, rgba(226, 121, 44, 0.10), transparent 60%);
+  filter: blur(20px);
+  animation: nosotrosAurora 26s ease-in-out infinite alternate;
+}
+
+@keyframes nosotrosAurora {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(2%, -2.5%, 0) scale(1.03);
+  }
+}
+
+/* --- Grano fino: le quita el look "plano de plantilla" --- */
+.nosotrosSection::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+/* ---------- Lineas doradas de fondo (a la deriva) ---------- */
+.goldLines {
+  position: absolute;
+  inset: -8% -10%;
+  width: 120%;
+  height: 116%;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+  animation: nosotrosDrift 34s ease-in-out infinite alternate;
+}
+
+@keyframes nosotrosDrift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-2%, 1.5%, 0) rotate(1.2deg);
+  }
+}
+
+/* cada linea se dibuja sola al entrar y luego brilla suavemente */
+.goldLines path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation:
+    nosotrosDraw 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    nosotrosShimmer 7s ease-in-out infinite;
+}
+
+.goldLines path:nth-child(1) { animation-delay: 0s, 2.4s; }
+.goldLines path:nth-child(2) { animation-delay: 0.15s, 2.8s; }
+.goldLines path:nth-child(3) { animation-delay: 0.3s, 3.2s; }
+.goldLines path:nth-child(4) { animation-delay: 0.45s, 3.6s; }
+.goldLines path:nth-child(5) { animation-delay: 0.6s, 4s; }
+.goldLines path:nth-child(6) { animation-delay: 0.75s, 4.4s; }
+
+@keyframes nosotrosDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes nosotrosShimmer {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+/* ---------- Luces suaves que flotan ---------- */
+.glowWarm,
+.glowGold {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(70px);
+}
+
+.glowWarm {
+  top: 12%;
+  right: -6%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(226, 121, 44, 0.22), transparent 70%);
+  animation: nosotrosFloatA 18s ease-in-out infinite alternate;
+}
+
+.glowGold {
+  bottom: 6%;
+  left: -8%;
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent 70%);
+  animation: nosotrosFloatB 22s ease-in-out infinite alternate;
+}
+
+@keyframes nosotrosFloatA {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-40px, 46px) scale(1.14); }
+}
+
+@keyframes nosotrosFloatB {
+  0%   { transform: translate(0, 0) scale(1.08); }
+  100% { transform: translate(50px, -40px) scale(1); }
+}
+
 /* ---------- Banner "Quienes somos" full-bleed ---------- */
 .topBanner {
   position: relative;
+  z-index: 1;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
@@ -28,9 +166,36 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 90px;
+  box-shadow: 0 14px 34px rgba(226, 121, 44, 0.24);
+  overflow: hidden;
+}
+
+/* destello que recorre el banner cada tanto */
+.topBanner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.38),
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: nosotrosSheen 7s ease-in-out infinite;
+}
+
+@keyframes nosotrosSheen {
+  0%, 62%  { left: -60%; }
+  92%, 100% { left: 130%; }
 }
 
 .topBannerText {
+  position: relative;
+  z-index: 1;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -52,15 +217,34 @@
   display: flex;
   align-items: center;
   gap: 60px;
-  margin-bottom: 90px;
+  margin-bottom: 100px;
 }
 
 .left {
+  position: relative;
   flex: 0 0 40%;
   text-align: left;
 }
 
+/* comilla decorativa detras del titulo */
+.quoteMark {
+  position: absolute;
+  top: -76px;
+  left: -36px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 190px;
+  line-height: 1;
+  color: rgba(212, 175, 55, 0.22);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
 .title {
+  position: relative;
+  z-index: 1;
   font-family: 'Cormorant Garamond', 'Space Grotesk', serif;
   font-size: clamp(36px, 4vw, 52px);
   line-height: 1.1;
@@ -71,26 +255,94 @@
   margin: 0 0 24px;
 }
 
+/* el dorado del titulo se mueve lentamente, como metal bajo la luz */
 .titleGold {
-  background: linear-gradient(100deg, #b8860b, #e8b855 45%, #f2d27a 65%, #c68a2e);
+  background: linear-gradient(
+    100deg,
+    #b8860b, #e8b855 35%, #f7e4a8 50%, #e8b855 65%, #c68a2e
+  );
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: nosotrosGoldFlow 9s ease-in-out infinite;
 }
 
+@keyframes nosotrosGoldFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
 
 .lead {
+  position: relative;
+  z-index: 1;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(18, 24, 27, 0.65);
-  margin: 0;
+  color: rgba(18, 24, 27, 0.76);
+  margin: 0 0 28px;
 }
 
-/* --------------Divider---------------------------*/
+/* ---------- Badges ---------- */
+.badges {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: rgba(18, 24, 27, 0.74);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
+  padding: 8px 16px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 0.25s ease, color 0.25s ease,
+              transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e2792c;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(226, 121, 44, 0.5);
+  animation: nosotrosPulse 2.6s ease-out infinite;
+}
+
+.badge:nth-child(2)::before { animation-delay: 0.5s; }
+.badge:nth-child(3)::before { animation-delay: 1s; }
+
+@keyframes nosotrosPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(226, 121, 44, 0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(226, 121, 44, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(226, 121, 44, 0); }
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  border-color: #e2792c;
+  color: #12181b;
+  box-shadow: 0 8px 18px rgba(226, 121, 44, 0.18);
+}
+
+/* -------------- Divider --------------------------- */
 .divider {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -112,153 +364,176 @@
   width: 17px;
   height: 17px;
   flex-shrink: 0;
+  animation: nosotrosCross 12s ease-in-out infinite;
 }
 
+@keyframes nosotrosCross {
+  0%, 88%, 100% { transform: rotate(0deg); }
+  94%           { transform: rotate(90deg); }
+}
 
-
-/* ---------- Tarjetas tipo bandera / paralelogramo ---------- */
-/* ---------- Contenedor que agrupa las 3 tarjetas + la ceja debajo ---------- */
+/* ======================================================================
+   Pilares: "edificios" apoyados sobre la ola (misma idea que el logo).
+   La ola NO recorta las tarjetas -> ningun texto se corta jamas.
+   ====================================================================== */
 .pillarsShowcase {
   position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 74px; /* espacio donde vive la ola */
 }
 
-/* ---------- Tarjetas: el clip-path de ola las corta a las 3 en una sola curva
-   continua (sus bases estan alineadas por align-items: flex-end) ---------- */
 .right {
   width: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-end;   /* bases alineadas -> la diagonal superior se lee continua */
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   position: relative;
-  z-index: 1;
-  padding-top: 12px; /* pequeno respiro para que el hover no toque el recorte */
-
-  clip-path: url(#nosotrosWaveClip);
-  -webkit-clip-path: url(#nosotrosWaveClip);
+  z-index: 2;
+  padding-top: 14px;
 }
 
-/* ---------- Ceja decorativa: separada de las tarjetas por un espacio en
-   blanco real (margin-top), con forma de almendra/ceja -> gruesa al centro,
-   afilada en ambas puntas (no un segmento circular). ---------- */
-/* ---------- Ceja: posicionada con % sobre la propia caja de .right, para que
-   quede realmente pegada al corte (no depende de la altura real de la tarjeta
-   mas alta, que es mucho mayor que la zona visible de la onda). ---------- */
-.eyebrowWave {
+/* la ola sobre la que reposan las tarjetas */
+.baseWave {
   position: absolute;
-  left: 6%;
-  top: 85%;
+  left: 50%;
+  bottom: 6px;
   transform: translateX(-50%);
-  width: 88%;
-  max-width: 560px;
-  height: 130px;
-  z-index: 0; /* detras de .right: solo se ve donde el negro fue recortado */
+  width: 108%;
+  max-width: 640px;
+  height: 96px;
+  z-index: 1;
   pointer-events: none;
+  filter: drop-shadow(0 12px 22px rgba(18, 24, 27, 0.18));
 }
-
 
 .pillarWrap {
   position: relative;
-  width: 28%;
+  width: 30%;
   display: flex;
   align-items: flex-end;
 }
 
+/* ---------- Tarjeta (definicion UNICA) ---------- */
 .pillarCard {
   position: relative;
-  width: 30%;
-  background: #12181b;
-  /* Lados y base rectos; solo el borde superior va en diagonal
-     (izquierda mas baja, derecha mas alta) */
-  clip-path: polygon(0% 22%, 100% 0%, 100% 100%, 0% 100%);
-  padding: 56px 26px 34px;
-  text-align: left;
+  width: 100%;
+  height: var(--h);
+  background: linear-gradient(165deg, #1b2328 0%, #12181b 100%);
+  clip-path: polygon(0% var(--card-step), 100% 0%, 100% 100%, 0% 100%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;   /* contenido abajo -> las 3 comparten linea base */
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 40px 20px 30px;
+  overflow: hidden;
+
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.pillarCard:first-child {
-  margin-left: 0;
+/* brillo sutil sobre el filo diagonal */
+.pillarCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.10), transparent 34%);
+  pointer-events: none;
 }
 
-/* Escalonado tipo bandera, alternando alturas */
+/* halo naranja que aparece al pasar el mouse */
+.pillarCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 50% at 50% 100%, rgba(226, 121, 44, 0.28), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
 
-/* Orden chico -> grande (izq. a der.), como una barra ascendente.
-   El borde superior de cada una sube de izquierda a derecha,
-   simulando una sola diagonal continua entre las 3. */
+.pillarWrap:hover .pillarCard::after {
+  opacity: 1;
+}
+
 .pillarWrap[data-index='0'] .pillarCard {
-  height: 260px;
-  clip-path: polygon(0% 23.1%, 100% 0%, 100% 100%, 0% 100%);
+  --h: var(--card-base);
 }
-.pillarWrap[data-index='0'] .pillarIconWrap {
-  bottom: 240px;
-}
-
 .pillarWrap[data-index='1'] .pillarCard {
-  height: 320px;
-  background: #1c2428;
-  clip-path: polygon(0% 18.75%, 100% 0%, 100% 100%, 0% 100%);
+  --h: calc(var(--card-base) + var(--card-step));
 }
-.pillarWrap[data-index='1'] .pillarIconWrap {
-  bottom: 300px;
-}
-
 .pillarWrap[data-index='2'] .pillarCard {
-  height: 380px;
-  clip-path: polygon(0% 15.8%, 100% 0%, 100% 100%, 0% 100%);
-}
-.pillarWrap[data-index='2'] .pillarIconWrap {
-  bottom: 360px;
+  --h: calc(var(--card-base) + var(--card-step) * 2);
 }
 
 .pillarWrap:hover .pillarCard {
   transform: translateY(-8px);
 }
 
+/* El icono se apoya sobre el borde superior de SU tarjeta */
 .pillarIconWrap {
   position: absolute;
   left: 50%;
+  bottom: calc(var(--h) - 20px);
   width: 54px;
   height: 54px;
   border-radius: 50% 50% 50% 0;
-  background: #e2792c;
+  background: linear-gradient(140deg, #ef9247, #d96a1f);
   transform: translateX(-50%) rotate(-45deg);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 20px rgba(226, 121, 44, 0.35);
   z-index: 3;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: nosotrosBob 5s ease-in-out infinite;
+}
+
+.pillarWrap[data-index='0'] .pillarIconWrap { --h: var(--card-base); animation-delay: 0s; }
+.pillarWrap[data-index='1'] .pillarIconWrap { --h: calc(var(--card-base) + var(--card-step)); animation-delay: 0.5s; }
+.pillarWrap[data-index='2'] .pillarIconWrap { --h: calc(var(--card-base) + var(--card-step) * 2); animation-delay: 1s; }
+
+/* flota apenas, manteniendo su rotacion de gota */
+@keyframes nosotrosBob {
+  0%, 100% { transform: translateX(-50%) rotate(-45deg) translate(0, 0); }
+  50%      { transform: translateX(-50%) rotate(-45deg) translate(3px, -3px); }
+}
+
+.pillarWrap:hover .pillarIconWrap {
+  animation-play-state: paused;
+  transform: translateX(-50%) rotate(-45deg) translate(6px, -6px);
 }
 
 .pillarIcon {
   color: #ffffff;
   transform: rotate(45deg);
 }
-.pillarCard {
+
+.pillarNum {
   position: relative;
-  width: 100%;
-  background: #12181b;
-  padding: 40px 26px 34px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 600;
+  color: rgba(212, 175, 55, 0.6);
+  margin-bottom: 2px;
 }
 
 .pillarTitle {
+  position: relative;
   font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 17.5px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.01em;
   margin: 0;
-  position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 12px;
 }
 
 .pillarTitle::after {
@@ -271,195 +546,309 @@
   height: 2px;
   background: #e2792c;
   border-radius: 2px;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.pillarWrap:hover .pillarTitle::after {
+  width: 46px;
+}
 
 .pillarText {
+  position: relative;
   font-family: 'Inter', sans-serif;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  max-width: 92%;
+  max-width: 94%;
 }
 
 /* ======================================================================
-   FAQ  ·  rediseño tipo acordeon (mas elegante y dinamico)
+   FAQ  ·  panel oscuro tipo dossier (indice + respuesta)
    ====================================================================== */
 .faqBlock {
   position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
   background:
-    radial-gradient(140% 160% at 100% 0%, rgba(226, 121, 44, 0.06), transparent 55%),
-    linear-gradient(160deg, #ffffff 0%, #fbf8f3 100%);
-  border: 1px solid rgba(18, 24, 27, 0.07);
+    radial-gradient(120% 120% at 100% 0%, rgba(226, 121, 44, 0.14), transparent 55%),
+    linear-gradient(155deg, #1b2429 0%, #12181b 55%, #0d1215 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 26px;
-  padding: 46px 48px;
-  text-align: left;
   overflow: hidden;
-  box-shadow: 0 22px 50px rgba(18, 24, 27, 0.08);
+  box-shadow: 0 30px 70px rgba(18, 24, 27, 0.28);
 }
 
-/* barra dorada lateral */
+/* filo dorado superior, como el canto de un documento */
 .faqBlock::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 100%;
-  background: linear-gradient(180deg, #f2d27a, #d4af37);
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f2d27a 20%, #d4af37 50%, #f2d27a 80%, transparent);
+  z-index: 3;
 }
 
-/* signo "?" decorativo enorme al fondo */
+/* grano sutil sobre el panel oscuro */
+.faqBlock::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23f)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* signo "?" decorativo */
 .faqDecor {
   position: absolute;
-  top: -40px;
-  right: 6px;
+  bottom: -110px;
+  right: 24px;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 700;
-  font-size: 300px;
+  font-size: 320px;
   line-height: 1;
-  color: rgba(212, 175, 55, 0.08);
+  color: rgba(212, 175, 55, 0.07);
   pointer-events: none;
   user-select: none;
   z-index: 0;
 }
 
-.faqHead {
+/* ---------- Columna izquierda: indice ---------- */
+.faqAside {
   position: relative;
-  z-index: 1;
-  margin-bottom: 26px;
+  z-index: 2;
+  flex: 0 0 38%;
+  padding: 46px 34px 46px 44px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
 }
 
 .faqLabel {
   display: inline-block;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: #e2792c;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .faqHeading {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-size: clamp(22px, 2.6vw, 30px);
-  font-weight: 700;
-  color: #12181b;
-  margin: 0;
-  letter-spacing: -0.01em;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.05;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 32px;
 }
 
-.faqList {
-  position: relative;
-  z-index: 1;
+.faqHeadingGold {
+  background: linear-gradient(100deg, #b8860b, #e8b855 45%, #f7e4a8 60%, #c68a2e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.faqIndex {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.faqItem {
-  border-top: 1px solid rgba(18, 24, 27, 0.08);
-}
-.faqItem:last-child {
-  border-bottom: 1px solid rgba(18, 24, 27, 0.08);
+.faqIndexBtn {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  padding: 16px 2px;
+  text-align: left;
+  font: inherit;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.3s ease, padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.faqTrigger {
-  width: 100%;
+.faqIndex li:last-child .faqIndexBtn {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faqIndexNum {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(212, 175, 55, 0.5);
+  transition: color 0.3s ease;
+}
+
+.faqIndexText {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+/* barra dorada que crece en el activo */
+.faqIndexBar {
+  position: absolute;
+  left: -44px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(180deg, #f2d27a, #d4af37);
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faqIndexBtn:hover {
+  color: rgba(255, 255, 255, 0.85);
+  padding-left: 8px;
+}
+
+.faqIndexActive {
+  color: #ffffff;
+  padding-left: 8px;
+}
+
+.faqIndexActive .faqIndexNum {
+  color: #f2d27a;
+}
+
+.faqIndexActive .faqIndexBar {
+  height: 62%;
+}
+
+/* ---------- Columna derecha: respuesta ---------- */
+.faqPane {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 46px 48px;
+  animation: faqPaneIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes faqPaneIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.faqPaneNum {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 54px;
+  line-height: 1;
+  font-weight: 600;
+  color: rgba(212, 175, 55, 0.28);
+  margin-bottom: 6px;
+}
+
+.faqPaneQ {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.18;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 20px;
+  max-width: 22ch;
+}
+
+.faqPaneRule {
+  display: block;
+  width: 54px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #e2792c, rgba(226, 121, 44, 0));
+  margin-bottom: 22px;
+}
+
+.faqPaneA {
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 32px;
+  max-width: 58ch;
+}
+
+.faqPaneFoot {
+  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 22px 4px;
-  text-align: left;
-  font: inherit;
-  color: #12181b;
-  transition: color 0.25s ease;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.faqQ {
+.faqPaneSign {
   font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-size: clamp(15.5px, 1.8vw, 18px);
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  transition: color 0.25s ease;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: rgba(255, 255, 255, 0.28);
 }
 
-.faqTrigger:hover .faqQ {
-  color: #b8860b;
-}
-
-/* chevron en circulo */
-.faqChevron {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  display: flex;
+.faqPaneCta {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   color: #12181b;
+  text-decoration: none;
   background: linear-gradient(135deg, #f2d27a, #d4af37);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  padding: 11px 22px;
+  border-radius: 999px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.faqItemOpen .faqChevron {
-  transform: rotate(180deg);
-  box-shadow: 0 8px 18px rgba(212, 175, 55, 0.35);
+.faqPaneCta svg {
+  transition: transform 0.25s ease;
 }
 
-/* panel con apertura suave (truco grid 0fr -> 1fr) */
-.faqPanel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+.faqPaneCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.32);
 }
 
-.faqItemOpen .faqPanel {
-  grid-template-rows: 1fr;
-}
-
-.faqPanelInner {
-  overflow: hidden;
-}
-
-.faqA {
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.7;
-  color: rgba(18, 24, 27, 0.62);
-  margin: 0;
-  padding: 0 46px 26px 4px;
-  max-width: 760px;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
-}
-
-.faqItemOpen .faqA {
-  opacity: 1;
-  transform: translateY(0);
+.faqPaneCta:hover svg {
+  transform: translateX(3px);
 }
 
 /* ======================================================================
-   Animaciones: entrada "volando" + desintegracion por scroll
-   (--p lo actualiza el JS en la seccion; --ex/--ey.. y --fx/--fy.. por elemento)
+   Animaciones de entrada / salida por scroll
    ====================================================================== */
-
-/* estado oculto antes de entrar */
 .hidden {
   opacity: 0;
 }
 
-/* entrada: cada elemento vuela desde su offset hasta su lugar */
 @keyframes nosotrosEnter {
   from {
     opacity: 0;
@@ -482,8 +871,6 @@
   will-change: transform, opacity, filter;
 }
 
-/* salida: cada grupo reacciona a SU PROPIO --p (seteado localmente por el JS
-   en cada ref: banner, texto izquierdo, tarjetas y FAQ) */
 .fly {
   transition: transform 0.12s linear, opacity 0.12s linear, filter 0.12s linear;
   transform:
@@ -493,6 +880,38 @@
   opacity: calc(1 - var(--p, 0));
   filter: blur(calc(var(--p, 0) * 8px));
   will-change: transform, opacity, filter;
+}
+
+/* la ola conserva su centrado horizontal al animarse */
+.baseWave.anim,
+.baseWave.fly {
+  transform-origin: center bottom;
+}
+
+.baseWave.fly {
+  transform:
+    translateX(-50%)
+    translate(calc(var(--p, 0) * var(--fx, 0px)), calc(var(--p, 0) * var(--fy, 60px)))
+    scale(calc(1 - var(--p, 0) * var(--fs, 0.2)));
+}
+
+@keyframes baseWaveEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(var(--ey, 24px)) scale(var(--es, 0.9));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.baseWave.anim {
+  animation-name: baseWaveEnter;
+}
+
+.baseWave.hidden {
+  opacity: 0;
 }
 
 /* ---------- Responsive ---------- */
@@ -508,26 +927,101 @@
     text-align: center;
   }
 
+  .quoteMark {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -60px;
+    font-size: 150px;
+  }
+
+  .badges {
+    justify-content: center;
+  }
+
+  .pillarsShowcase {
+    padding-bottom: 0;
+  }
+
   .right {
     flex-direction: column;
     align-items: stretch;
-    clip-path: none;
-    -webkit-clip-path: none;
     padding-top: 0;
   }
 
-  .orangeWave,
-  .eyebrowWave {
+  .baseWave {
     display: none;
+  }
+
+  .pillarWrap {
+    width: 100%;
+    margin-bottom: 22px;
   }
 
   .pillarCard {
     width: 100%;
     height: auto !important;
-    margin: 0 0 20px !important;
     clip-path: none;
     border-radius: 18px;
-    padding: 32px 28px;
+    border-top: 3px solid #e2792c;
+    padding: 34px 28px 30px;
+  }
+
+  .pillarIconWrap {
+    bottom: auto !important;
+    top: -16px;
+  }
+}
+
+/* FAQ: en pantallas medianas el indice pasa arriba, en fila horizontal */
+@media (max-width: 900px) {
+  .faqBlock {
+    flex-direction: column;
+  }
+
+  .faqAside {
+    flex: 1;
+    padding: 34px 28px 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .faqIndex {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+  }
+
+  .faqIndex::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faqIndexBtn {
+    width: auto;
+    white-space: nowrap;
+    border-top: none;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 9px 16px !important;
+    gap: 8px;
+  }
+
+  .faqIndex li:last-child .faqIndexBtn {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .faqIndexActive {
+    border-color: rgba(212, 175, 55, 0.6);
+    background: rgba(212, 175, 55, 0.1);
+  }
+
+  .faqIndexBar {
+    display: none;
+  }
+
+  .faqPane {
+    padding: 34px 28px;
   }
 }
 
@@ -536,28 +1030,56 @@
     padding: 0 24px;
   }
 
-  .faqBlock {
-    padding: 34px 26px;
+  .faqAside {
+    padding: 28px 22px 0;
+  }
+
+  .faqPane {
+    padding: 28px 22px;
   }
 
   .faqDecor {
     font-size: 200px;
-    top: -20px;
+    bottom: -70px;
   }
 
-  .faqA {
-    padding-right: 8px;
+  .faqPaneFoot {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 /* ---------- Accesibilidad: sin movimiento ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .nosotrosSection::before,
+  .goldLines,
+  .goldLines path,
+  .glowWarm,
+  .glowGold,
+  .topBanner::after,
+  .titleGold,
+  .dividerCross,
+  .badge::before,
+  .pillarIconWrap {
+    animation: none !important;
+  }
+
+  .goldLines path {
+    stroke-dashoffset: 0;
+  }
+
   .hidden,
   .anim,
   .fly {
     animation: none !important;
     opacity: 1 !important;
-    transform: none !important;
     filter: none !important;
+    transform: none !important;
+  }
+
+  .baseWave.hidden,
+  .baseWave.anim,
+  .baseWave.fly {
+    transform: translateX(-50%) !important;
   }
 }

@@ -77,7 +77,7 @@
   padding: 4px 50px 5px 0px;
   overflow: hidden;
   z-index: 2;
-  transition: filter 0.4s ease;
+  transition: filter 0.4s ease, flex-basis 0.3s ease, height 0.3s ease;
 }
 
 .logoBoxScrolled {
@@ -104,7 +104,8 @@
   /* transicion mas larga y con curva suave = el cambio se siente limpio, no de golpe */
   transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
               backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-              -webkit-backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+              -webkit-backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.3s ease, padding 0.3s ease, gap 0.3s ease;
   will-change: background-color, backdrop-filter;
   display: flex;
   align-items: center;
@@ -119,6 +120,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
+  min-width: 0; /* permite que el nav se comprima en vez de desbordar */
 }
 
 .links {
@@ -161,6 +163,10 @@
   transform: scale(1.1);
 }
 
+.linkLabel {
+  white-space: nowrap;
+}
+
 .links a::after {
   content: '';
   position: absolute;
@@ -197,17 +203,22 @@
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
   transform: scale(1);
   box-shadow: 0 0 0 rgba(226, 121, 44, 0);
   transition: background 0.25s ease, color 0.25s ease,
               transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.25s ease;
+              box-shadow 0.25s ease, padding 0.3s ease, border-radius 0.3s ease;
 }
 
 .whatsappIcon {
   flex-shrink: 0;
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.whatsappLabel {
+  white-space: nowrap;
 }
 
 .whatsappBtn:hover .whatsappIcon {
@@ -222,83 +233,150 @@
   box-shadow: 0 0 18px rgba(226, 121, 44, 0.65), 0 0 4px rgba(255, 255, 255, 0.4);
 }
 
-/* ---------- Burger (mobile) ---------- */
-.burger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 32px;
-  height: 32px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-}
+/* ---------------------------------------------------------
+   Responsive — el nav se COMPRIME, nunca se convierte en
+   hamburguesa: siempre se ven los links y el botón de WhatsApp,
+   solo se van reduciendo tamaños para que quepan.
+--------------------------------------------------------- */
 
-.burger span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 2px;
-}
-
-/* ---------- Responsive ---------- */
+/* Tablet: todo un poco más chico, logo más angosto */
 @media (max-width: 860px) {
   .logoBox {
-    flex-basis: 150px;
-    height: 104px;
-    margin-right: -57px;
-    clip-path: polygon(0 0, 100% 0, 62% 100%, 0 100%);
+    flex-basis: 118px;
+    height: 78px;
+    margin-right: -42px;
+    padding: 3px 32px 3px 0;
   }
 
   .menuBox {
-    height: 74px;
-    padding: 0 20px 0 62px;
-  }
-
-  .burger {
-    display: flex;
-  }
-
-  .linksWrap {
-    position: absolute;
-    top: 104px;
-    left: 0;
-    right: 0;
-    justify-content: stretch;
+    height: 66px;
+    padding: 0 18px 0 50px;
+    gap: 18px;
   }
 
   .links {
+    gap: 18px;
+  }
+
+  .links a {
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    gap: 5px;
+  }
+
+  /* el botón de WhatsApp sale del nav en mobile; lo reemplaza .whatsappFloat */
+  .whatsappBtn {
     display: none;
   }
 
-  .linksOpen {
+  .whatsappFloat {
     display: flex;
-    flex-direction: column;
-    gap: 0;
-    background: #12181b;
-    width: 100%;
+  }
+}
+
+/* ---------- Burbuja flotante de WhatsApp (solo mobile) ---------- */
+.whatsappFloat {
+  display: none; /* oculta en desktop, se activa en el media query de arriba */
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  box-shadow: 0 10px 26px rgba(37, 211, 102, 0.45), 0 2px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.whatsappFloat::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.45);
+  animation: whatsappPulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes whatsappPulse {
+  0%   { transform: scale(0.9); opacity: 0.8; }
+  70%  { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.whatsappFloat:active {
+  transform: scale(0.93);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsappFloat::before {
+    animation: none;
+  }
+}
+
+/* Teléfono: logo más chico, texto de los links más compacto (pero visible) */
+@media (max-width: 520px) {
+  .logoBox {
+    flex-basis: 70px;
+    height: 54px;
+    margin-right: -20px;
+    padding: 2px 18px 2px 0;
   }
 
-  .linksOpen li {
-    width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  .menuBox {
+    height: 54px;
+    padding: 0 8px 0 26px;
+    gap: 6px;
   }
 
-  .linksOpen a {
-    display: block;
-    padding: 16px 28px;
+  .links {
+    gap: 8px;
+  }
+
+  .links a {
+    font-size: 8.6px;
+    letter-spacing: 0.015em;
+    gap: 3px;
+    padding-bottom: 0;
   }
 
   .links a::after {
-    display: none;
+    display: none; /* con el texto tan chico, el subrayado se ve como una raya suelta */
   }
 
-  .links a:hover {
-    transform: none;
+  .linkIcon {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Teléfono muy angosto: un ajuste más para que nunca se corte */
+@media (max-width: 380px) {
+  .logoBox {
+    flex-basis: 58px;
+    margin-right: -16px;
+  }
+
+  .menuBox {
+    padding: 0 6px 0 22px;
+    gap: 4px;
+  }
+
+  .links {
+    gap: 6px;
+  }
+
+  .links a {
+    font-size: 7.8px;
+    gap: 2px;
+  }
+
+  .linkIcon {
+    width: 12px;
+    height: 12px;
   }
 }

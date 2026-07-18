@@ -7,7 +7,7 @@ const PILLARS = [
   {
     Icon: ShieldCheck,
     title: 'Calidad',
-    text: 'Fabricantes seleccionados cuidadosamente',
+    text: 'Fabricantes seleccionados y procesos validados.',
   },
   {
     Icon: Clock3,
@@ -16,21 +16,33 @@ const PILLARS = [
   },
   {
     Icon: HeartHandshake,
-    title: 'Atencion personalizada',
-    text: 'Entendemos tus procesos logisticos y tus retos.',
+    title: 'Atención personalizada',
+    text: 'Entendemos tu operación y sus retos.',
   },
 ];
 
 // Puedes editar / agregar / quitar preguntas libremente.
-// La segunda es un ejemplo: borrala si solo quieres la tuya.
+// `short` es la etiqueta corta del indice; `q` es la pregunta completa.
 const FAQS = [
   {
-    q: '¿Por que deberiamos cambiar de proveedor?',
-    a: 'No buscamos que cambien unicamente por precio. Queremos la oportunidad de demostrar una combinacion de calidad, servicio y compromiso que realmente haga la diferencia. Sabemos que cambiar de proveedor implica un riesgo, por eso preferimos que nos evaluen por resultados, no por promesas.',
+    short: 'Por qué escogernos',
+    q: '¿Por qué escogernos?',
+    a: 'Porque no venimos a cerrar una venta puntual, sino a construir una relación de largo plazo. Trabajamos sobre tres pilares: calidad que se mantiene constante en cada lote, cumplimiento de los tiempos que prometemos y atención de alguien que entiende tu operación. Cuando un proveedor responde, cumple y sostiene su calidad, deja de ser un proveedor y se convierte en un aliado del negocio. Ahí es donde queremos llegar contigo.',
   },
   {
+    short: 'Cambiar de proveedor',
+    q: '¿Por qué deberíamos cambiar de proveedor?',
+    a: 'No buscamos que cambien únicamente por precio. Queremos la oportunidad de demostrar una combinación de calidad, servicio y compromiso que realmente haga la diferencia. Sabemos que cambiar de proveedor implica un riesgo, por eso preferimos que nos evalúen por resultados, no por promesas.',
+  },
+  {
+    short: 'Muestras',
     q: '¿Manejan muestras antes de una compra grande?',
-    a: 'Si. Preferimos que prueben el producto en su propia operacion antes de comprometerse con un volumen mayor. Escribenos y coordinamos una muestra para tu linea de embalaje.',
+    a: 'Sí. Preferimos que prueben el producto en su propia flota antes de comprometerse con un volumen mayor. Escríbenos y coordinamos una muestra para las unidades que quieras evaluar.',
+  },
+  {
+    short: 'Marca nueva',
+    q: 'Son una marca nueva, ¿por qué confiar?',
+    a: 'Porque la confianza no se pide, se gana. Seleccionamos cuidadosamente a nuestros fabricantes y validamos los procesos antes de traer un producto. Sabemos lo que implica apostar por un nombre que recién empieza, y por eso preferimos que la relación arranque en pequeño y crezca con los resultados a la vista.',
   },
 ];
 
@@ -38,8 +50,6 @@ export default function Nosotros() {
   const sectionRef = useRef(null);
   // Cada grupo visual tiene su PROPIA referencia y su PROPIO progreso de scroll,
   // calculado segun SU posicion real en pantalla (no la de toda la seccion).
-  // Asi cada uno se arma/desarma cuando EL esta cerca del centro de la pantalla,
-  // sin importar si esta arriba (banner/titulo) o abajo (tarjetas/FAQ).
   const bannerRef = useRef(null);
   const leftRef = useRef(null);
   const pillarsRef = useRef(null);
@@ -66,7 +76,6 @@ export default function Nosotros() {
           if (e.isIntersecting) {
             setPhase('entering');
             io.disconnect();
-            // al terminar las animaciones de entrada, pasa a reaccionar al scroll
             window.setTimeout(() => setPhase('ready'), 1700);
           }
         });
@@ -78,10 +87,7 @@ export default function Nosotros() {
     return () => io.disconnect();
   }, []);
 
-  // --- Desintegracion por scroll: cada grupo calcula su PROPIO progreso (0 a 1)
-  // segun que tan lejos esta SU propio centro del centro de la pantalla.
-  // 0 = centrado y armado. 1 = lejos (arriba o abajo) y desarmado.
-  // Se actualiza en cada scroll, asi se arma y desarma las veces que subas o bajes.
+  // --- Desintegracion por scroll: cada grupo calcula su PROPIO progreso (0 a 1) ---
   useEffect(() => {
     if (phase !== 'ready') return;
 
@@ -118,9 +124,6 @@ export default function Nosotros() {
     };
   }, [phase]);
 
-  // clase segun la fase: oculto -> animacion de entrada -> transform por scroll
-  // (todos los grupos comparten la MISMA clase .fly; cada uno lee su propio
-  // --p, seteado localmente en su ref por el efecto de arriba)
   const stage =
     phase === 'hidden' ? styles.hidden : phase === 'entering' ? styles.anim : styles.fly;
 
@@ -131,28 +134,47 @@ export default function Nosotros() {
       className={styles.nosotrosSection}
       style={{ '--p': 0 }}
     >
-      {/* Definicion del recorte en forma de ola (como el logo).
-          clipPathUnits="objectBoundingBox" -> el path va de 0 a 1
-          y se adapta automaticamente al tamano real del grupo de tarjetas. */}
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+      {/* ---------- Lineas doradas decorativas de fondo (rompen el blanco) ---------- */}
+      <svg
+        className={styles.goldLines}
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
         <defs>
-          <clipPath id="nosotrosWaveClip" clipPathUnits="objectBoundingBox">
-            <path d="M0,-0.6 L1,-0.6 L1,0.94 C0.97,0.955 0.90,0.99 0.85,0.99 C0.6,0.99 0.35,0.82 0.15,0.82 C0.10,0.82 0.04,0.87 0,0.90 Z" />
-          </clipPath>
+          <linearGradient id="nosotrosGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#f2d27a" />
+            <stop offset="50%" stopColor="#c68a2e" />
+            <stop offset="100%" stopColor="#f2d27a" />
+          </linearGradient>
         </defs>
+        <g stroke="url(#nosotrosGold)" strokeWidth="1.4" fill="none">
+          <path d="M-40,120 L560,-30" />
+          <path d="M-60,330 L420,880" />
+          <path d="M1480,80 L900,700" />
+          <path d="M1180,-40 L1520,420" />
+          <path d="M1500,560 L980,940" />
+          <path d="M120,-30 L760,540" />
+        </g>
       </svg>
+
+      {/* Luces suaves para dar profundidad */}
+      <span className={styles.glowWarm} aria-hidden="true" />
+      <span className={styles.glowGold} aria-hidden="true" />
 
       <div
         ref={bannerRef}
         className={`${styles.topBanner} ${stage}`}
         style={{ '--delay': '0s', '--ey': '-40px', '--fy': '-120px', '--fs': '0.15' }}
       >
-        <span className={styles.topBannerText}>Quienes somos</span>
+        <span className={styles.topBannerText}>Quiénes somos</span>
       </div>
 
       <div className={styles.content}>
         <div className={styles.grid}>
           <div className={styles.left} ref={leftRef}>
+            <span className={styles.quoteMark} aria-hidden="true">&ldquo;</span>
+
             <h2
               className={`${styles.title} ${stage}`}
               style={{
@@ -194,14 +216,28 @@ export default function Nosotros() {
                 '--fx': '-140px', '--fy': '70px', '--fr': '-8deg', '--fs': '0.2',
               }}
             >
-              Somos una empresa de importaciones que esta introduciendo al mercado una nueva
-              linea de bolsas de aire para embalaje y proteccion. Sabemos lo que implica confiar
-              en una marca nueva, por eso nuestro compromiso es simple: demostrar con hechos la
-              calidad de nuestro producto y el nivel de nuestro servicio, envio tras envio.
+              Somos una empresa de importaciones que está introduciendo al mercado una nueva
+              línea de repuestos para transporte pesado, desde Arequipa para todo el sur del
+              país. Sabemos lo que implica confiar en una marca nueva, por eso nuestro
+              compromiso es simple: demostrar con hechos la calidad de nuestro producto y el
+              nivel de nuestro servicio, entrega tras entrega.
             </p>
+
+            <div
+              className={`${styles.badges} ${stage}`}
+              style={{
+                '--delay': '0.34s',
+                '--ex': '-40px', '--ey': '30px',
+                '--fx': '-120px', '--fy': '80px', '--fr': '-6deg', '--fs': '0.2',
+              }}
+            >
+              <span className={styles.badge}>Base en Arequipa</span>
+              <span className={styles.badge}>Cobertura en el sur</span>
+              <span className={styles.badge}>Catálogo en crecimiento</span>
+            </div>
           </div>
 
-          {/* ---------- Tarjetas con corte de ola + curva naranja (estilo logo) ---------- */}
+          {/* ---------- Los pilares como "edificios" sobre la ola (igual que el logo) ---------- */}
           <div className={styles.pillarsShowcase} ref={pillarsRef}>
             <div className={styles.right}>
               {PILLARS.map(({ Icon, title, text }, i) => (
@@ -224,6 +260,7 @@ export default function Nosotros() {
                     <Icon size={20} strokeWidth={2} className={styles.pillarIcon} />
                   </div>
                   <div className={styles.pillarCard}>
+                    <span className={styles.pillarNum}>{`0${i + 1}`}</span>
                     <h3 className={styles.pillarTitle}>{title}</h3>
                     <p className={styles.pillarText}>{text}</p>
                   </div>
@@ -231,37 +268,46 @@ export default function Nosotros() {
               ))}
             </div>
 
-            {/* Ceja decorativa: separada de las tarjetas por un espacio en blanco,
-                con forma real de ceja (gruesa al centro, afilada en las puntas). */}
+            {/* La ola sobre la que reposan las tarjetas: onda oscura + trazo naranja,
+                la misma relacion que tiene el logo (edificios sobre la ola). */}
             <svg
-              className={`${styles.eyebrowWave} ${stage}`}
+              className={`${styles.baseWave} ${stage}`}
               style={{
-                '--delay': '0.5s',
-                '--ex': '0px', '--ey': '20px', '--es': '0.15',
-                '--fx': '0px', '--fy': '60px', '--fr': '0deg', '--fs': '0.2',
+                '--delay': '0.62s',
+                '--ex': '0px', '--ey': '24px', '--es': '0.9',
+                '--fx': '0px', '--fy': '70px', '--fr': '0deg', '--fs': '0.2',
               }}
-              viewBox="0 0 100 60"
+              viewBox="0 0 100 26"
               preserveAspectRatio="none"
               aria-hidden="true"
             >
               <defs>
-                <linearGradient id="nosotrosOrangeGradient" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#2f363b" />
-                  <stop offset="55%" stopColor="#454d53" />
-                  <stop offset="100%" stopColor="#5a636a" />
+                <linearGradient id="nosotrosWaveDark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#12181b" />
+                  <stop offset="60%" stopColor="#2b3439" />
+                  <stop offset="100%" stopColor="#49535a" />
                 </linearGradient>
               </defs>
-              {/* Misma curva (mismo ritmo x: 0 -> 15% pico -> 85% valle -> 100% repunte)
-                  que el clip-path de las tarjetas, para que encaje en forma. */}
+
+              {/* onda oscura: las tarjetas se apoyan sobre su lomo */}
               <path
-                d="M0,19 C4,13 10,4 15,4 C35,4 60,36 85,36 C90,36 97,30 100,27 L100,47 C97,50 90,56 85,56 C60,56 35,24 15,24 C10,24 4,33 0,39 Z"
-                fill="url(#nosotrosOrangeGradient)"
+                d="M0,7 C16,-1 34,13 52,11 C72,9 88,2 100,5 L100,15 C88,12 72,19 52,21 C34,23 16,9 0,17 Z"
+                fill="url(#nosotrosWaveDark)"
+              />
+              {/* trazo naranja por debajo, como el swoosh del logo */}
+              <path
+                d="M0,20 C16,12 34,26 52,24 C72,22 88,15 100,18"
+                fill="none"
+                stroke="#e2792c"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
               />
             </svg>
           </div>
         </div>
 
-        {/* ---------- FAQ rediseñado (acordeon) ---------- */}
+        {/* ---------- FAQ (acordeon) ---------- */}
         <div
           ref={faqRef}
           className={`${styles.faqBlock} ${stage}`}
@@ -273,48 +319,70 @@ export default function Nosotros() {
         >
           <span className={styles.faqDecor} aria-hidden="true">?</span>
 
-          <div className={styles.faqHead}>
+          {/* ----- Indice (columna izquierda) ----- */}
+          <div className={styles.faqAside}>
             <span className={styles.faqLabel}>Nos lo preguntan seguido</span>
-            <h3 className={styles.faqHeading}>Preguntas frecuentes</h3>
-          </div>
+            <h3 className={styles.faqHeading}>
+              Preguntas
+              <br />
+              <span className={styles.faqHeadingGold}>frecuentes</span>
+            </h3>
 
-          <ul className={styles.faqList}>
-            {FAQS.map((item, i) => {
-              const isOpen = openFaq === i;
-              return (
-                <li
-                  key={i}
-                  className={`${styles.faqItem} ${isOpen ? styles.faqItemOpen : ''}`}
-                >
+            <ul className={styles.faqIndex} role="tablist" aria-label="Preguntas frecuentes">
+              {FAQS.map((item, i) => (
+                <li key={item.q}>
                   <button
                     type="button"
-                    className={styles.faqTrigger}
-                    aria-expanded={isOpen}
-                    onClick={() => setOpenFaq(isOpen ? -1 : i)}
+                    role="tab"
+                    id={`faq-tab-${i}`}
+                    aria-selected={openFaq === i}
+                    aria-controls={`faq-pane-${i}`}
+                    className={`${styles.faqIndexBtn} ${openFaq === i ? styles.faqIndexActive : ''}`}
+                    onClick={() => setOpenFaq(i)}
                   >
-                    <span className={styles.faqQ}>{item.q}</span>
-                    <span className={styles.faqChevron} aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                        <path
-                          d="M6 9l6 6 6-6"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
+                    <span className={styles.faqIndexNum}>{`0${i + 1}`}</span>
+                    <span className={styles.faqIndexText}>{item.short}</span>
+                    <span className={styles.faqIndexBar} aria-hidden="true" />
                   </button>
-
-                  <div className={styles.faqPanel}>
-                    <div className={styles.faqPanelInner}>
-                      <p className={styles.faqA}>{item.a}</p>
-                    </div>
-                  </div>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+          </div>
+
+          {/* ----- Respuesta (columna derecha) ----- */}
+          <div
+            className={styles.faqPane}
+            id={`faq-pane-${openFaq}`}
+            role="tabpanel"
+            aria-labelledby={`faq-tab-${openFaq}`}
+            key={openFaq} /* fuerza la animacion de entrada al cambiar */
+          >
+            <span className={styles.faqPaneNum} aria-hidden="true">
+              {`0${openFaq + 1}`}
+            </span>
+
+            <h4 className={styles.faqPaneQ}>{FAQS[openFaq].q}</h4>
+
+            <span className={styles.faqPaneRule} aria-hidden="true" />
+
+            <p className={styles.faqPaneA}>{FAQS[openFaq].a}</p>
+
+            <div className={styles.faqPaneFoot}>
+              <span className={styles.faqPaneSign}>NEXVIA</span>
+              <a href="#contacto" className={styles.faqPaneCta}>
+                Conversemos
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

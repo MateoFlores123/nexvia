@@ -1,0 +1,491 @@
+/* Footer.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.footer {
+  position: relative;
+  background: #0b0a08;
+  color: rgba(246, 241, 230, 0.7);
+  font-family: 'Inter', sans-serif;
+  padding: 76px 40px 28px;
+  overflow: hidden;
+}
+
+.footer * {
+  box-sizing: border-box;
+}
+
+.bgGlow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 60vw;
+  height: 40vw;
+  max-width: 760px;
+  max-height: 520px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(242, 210, 122, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------
+   Columnas superiores
+--------------------------------------------------------- */
+.top {
+  display: grid;
+  grid-template-columns: 1.4fr 0.85fr 0.85fr 0.9fr;
+  gap: 48px;
+  padding-bottom: 44px;
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #f6f1e6;
+  width: fit-content;
+}
+
+.logoDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f2d27a, #c68a2e);
+  box-shadow: 0 0 12px rgba(242, 210, 122, 0.7);
+}
+
+.tagline {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(246, 241, 230, 0.55);
+  max-width: 340px;
+  margin: 0;
+}
+
+.social {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(242, 210, 122, 0.22);
+  color: rgba(246, 241, 230, 0.8);
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
+}
+
+.socialLink:hover {
+  color: #0b0a08;
+  background: linear-gradient(135deg, #f2d27a, #c68a2e);
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+.colTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f2d27a;
+  margin: 0 0 18px;
+}
+
+.linkList,
+.contactList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactList li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(246, 241, 230, 0.55);
+}
+
+.link {
+  font-size: 0.9rem;
+  color: rgba(246, 241, 230, 0.65);
+  text-decoration: none;
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.link:hover {
+  color: #f2d27a;
+  padding-left: 3px;
+}
+
+.linkBtn {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: rgba(246, 241, 230, 0.65);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.linkBtn:hover {
+  color: #f2d27a;
+  padding-left: 3px;
+}
+
+/* ---------------------------------------------------------
+   Línea de ruta — guiño al rubro logístico/importador:
+   una línea punteada con un punto dorado que "viaja",
+   como una ruta de envío. Es el elemento firma del footer.
+--------------------------------------------------------- */
+.routeLine {
+  position: relative;
+  height: 1px;
+  margin: 0 0 30px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(242, 210, 122, 0.28) 0px,
+    rgba(242, 210, 122, 0.28) 6px,
+    transparent 6px,
+    transparent 14px
+  );
+}
+
+.routeDot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f2d27a;
+  box-shadow: 0 0 10px rgba(242, 210, 122, 0.9), 0 0 22px rgba(242, 210, 122, 0.4);
+  transform: translate(-50%, -50%);
+  animation: travel 9s ease-in-out infinite;
+}
+
+@keyframes travel {
+  0%   { left: 0%; }
+  50%  { left: 100%; }
+  100% { left: 0%; }
+}
+
+/* ---------------------------------------------------------
+   Barra inferior
+--------------------------------------------------------- */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(246, 241, 230, 0.08);
+  font-size: 0.8rem;
+  color: rgba(246, 241, 230, 0.4);
+}
+
+.bottomSecondary {
+  color: rgba(246, 241, 230, 0.32);
+}
+
+/* ---------------------------------------------------------
+   Modal (Términos / Privacidad / Libro de Reclamaciones)
+--------------------------------------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(11, 10, 8, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: overlayIn 0.25s ease both;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: min(84vh, 720px);
+  display: flex;
+  flex-direction: column;
+  background: #fbf8f2;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  outline: none;
+  animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px;
+  border-bottom: 1px solid rgba(32, 26, 18, 0.08);
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #201a12;
+  margin: 0;
+}
+
+.modalClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(32, 26, 18, 0.06);
+  color: #201a12;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.modalClose:hover {
+  background: rgba(226, 121, 44, 0.16);
+  transform: rotate(90deg);
+}
+
+.modalBody {
+  padding: 24px 26px 30px;
+  overflow-y: auto;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(32, 26, 18, 0.8);
+}
+
+/* texto legal */
+.legalText h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #201a12;
+  margin: 20px 0 8px;
+}
+
+.legalText h4:first-child {
+  margin-top: 0;
+}
+
+.legalText p {
+  margin: 0 0 10px;
+}
+
+.legalText a {
+  color: #b8710f;
+}
+
+.legalMeta {
+  margin-top: 18px !important;
+  font-size: 0.78rem;
+  color: rgba(32, 26, 18, 0.45);
+}
+
+.legalHint {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: rgba(32, 26, 18, 0.6);
+  margin: 0 0 20px;
+}
+
+/* ---------------------------------------------------------
+   Formulario del Libro de Reclamaciones
+   (mismo lenguaje visual que el formulario de Contacto)
+--------------------------------------------------------- */
+.reclamoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reclamoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(32, 26, 18, 0.65);
+}
+
+.input {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: #201a12;
+  background: #ffffff;
+  border: 1.5px solid rgba(32, 26, 18, 0.12);
+  border-radius: 10px;
+  padding: 10px 13px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #e2792c;
+  box-shadow: 0 0 0 4px rgba(226, 121, 44, 0.12);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.inputError {
+  border-color: #d9534f;
+  background: #fdf3f2;
+}
+
+.error {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #d9534f;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.82rem;
+  color: rgba(32, 26, 18, 0.7);
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.checkboxRow input {
+  margin-top: 2px;
+  accent-color: #e2792c;
+}
+
+.reclamoSubmit {
+  margin-top: 4px;
+  align-self: flex-start;
+  background: linear-gradient(135deg, #f2d27a, #c68a2e);
+  color: #201a12;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 26px;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(198, 138, 46, 0.3);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.reclamoSubmit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(198, 138, 46, 0.4);
+}
+
+.reclamoDone {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reclamoDone p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------
+   Responsive
+--------------------------------------------------------- */
+@media (max-width: 940px) {
+  .top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+}
+
+@media (max-width: 620px) {
+  .footer {
+    padding: 60px 22px 24px;
+  }
+  .top {
+    grid-template-columns: 1fr;
+  }
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .reclamoRow {
+    grid-template-columns: 1fr;
+  }
+  .modal {
+    max-height: 90vh;
+    border-radius: 16px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Accesibilidad
+--------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .routeDot {
+    animation: none;
+    left: 50%;
+  }
+  .overlay,
+  .modal {
+    animation: none;
+  }
+}

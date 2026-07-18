@@ -90,7 +90,7 @@
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0.01em;
-  color: rgba(18, 24, 27, 0.68);
+  color: rgba(18, 24, 27, 1);
   margin: 0 0 26px;
   max-width: 480px;
 }
@@ -106,11 +106,11 @@
 }
 
 .heroImg {
-  width: 100%;
+  width:100%;
   height: auto;
   display: block;
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35));
-  transform: rotate(90deg);
+  transform: rotate(0deg);
 }
 
 .enterVisual {
@@ -171,11 +171,18 @@
 }
 
 @media (max-width: 860px) {
-  .flyEyebrow { transform: translate(calc(var(--hero-progress, 0) * -80px), calc(var(--hero-progress, 0) * -30px)) rotate(calc(var(--hero-progress, 0) * -18deg)); }
-  .flyTitle { transform: translate(calc(var(--hero-progress, 0) * 90px), calc(var(--hero-progress, 0) * -55px)) rotate(calc(var(--hero-progress, 0) * 10deg)) scale(calc(1 - var(--hero-progress, 0) * 0.25)); }
-  .flySubtitle { transform: translate(calc(var(--hero-progress, 0) * -70px), calc(var(--hero-progress, 0) * 40px)) rotate(calc(var(--hero-progress, 0) * -9deg)); }
-  .flyCta { transform: translate(calc(var(--hero-progress, 0) * 60px), calc(var(--hero-progress, 0) * 70px)) rotate(calc(var(--hero-progress, 0) * 16deg)); }
-  .flyVisual { transform: translateY(-50%) translate(calc(var(--hero-progress, 0) * -90px), calc(var(--hero-progress, 0) * -35px)) rotate(calc(var(--hero-progress, 0) * 12deg)) scale(calc(1 - var(--hero-progress, 0) * 0.2)); }
+  /* En movil el efecto "vuela al hacer scroll" queda completamente
+     desactivado: ni transform, ni opacity, ni blur reaccionan a
+     --hero-progress. Los elementos se quedan quietos y visibles. */
+  .flyEyebrow,
+  .flyTitle,
+  .flySubtitle,
+  .flyCta,
+  .flyVisual {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
 }
 
 /* ---------- Construccion al entrar a la pagina ---------- */
@@ -230,10 +237,24 @@
 .enterCta { --enter-x: 65px; --enter-y: 60px; --enter-r: 10deg; animation-delay: 0.55s; }
 
 @media (max-width: 860px) {
-  .enterEyebrow { --enter-x: -50px; --enter-y: -18px; }
-  .enterTitle { --enter-x: 55px; --enter-y: -35px; }
-  .enterSubtitle { --enter-x: -45px; --enter-y: 24px; }
-  .enterCta { --enter-x: 35px; --enter-y: 34px; }
+  .enterEyebrow { --enter-x: -30px; --enter-y: -14px; }
+  .enterTitle { --enter-x: 30px; --enter-y: -20px; }
+  .enterSubtitle { --enter-x: -25px; --enter-y: 16px; }
+  .enterCta { --enter-x: 20px; --enter-y: 20px; }
+  .enterVisual { animation-duration: 0.7s; }
+
+  @keyframes enterVisualFly {
+    from {
+      opacity: 0;
+      transform: translate(0, -30px) scale(0.92);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
 }
 
 .eyebrow {
@@ -340,37 +361,121 @@
   );
 }
 
-/* ---------- Responsive ---------- */
+/* =====================================================================
+   RESPONSIVE MOBILE (<= 860px)
+   El layout de desktop depende de anclar cada bloque a un % de altura
+   de la seccion (que asume seccion = 100vh). En movil el contenido no
+   guarda esa proporcion, asi que en vez de seguir anclando por %,
+   pasamos a un layout en FLUJO NORMAL: cada bloque ocupa su alto real
+   y se ordena con `order`, evitando cualquier superposicion.
+   ===================================================================== */
 @media (max-width: 860px) {
-  .wave path {
-    /* en movil la curva se ve mejor mas plana y un poco mas arriba */
+  .heroSection {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    padding-bottom: 0;
   }
 
-  .topBlock {
-    bottom: calc(100% - 60% + 10px);
-    padding: 0 24px;
-    padding-top: 90px;
+  .overlay {
+    background: linear-gradient(to bottom, rgba(18, 24, 27, 0.55) 10%, rgba(18, 24, 27, 0.8) 100%);
   }
 
-  .bottomBlock {
-    top: calc(60% + 30px);
-    padding: 0 24px;
+  /* La curva ya no ocupa su propio bloque en movil: consumia espacio vertical
+     y empujaba el CTA fuera de la pantalla. En su lugar, el corte queda
+     resuelto con un borde naranja arriba de .bottomBlock. */
+  .waveAccent,
+  .wave {
+    display: none;
   }
 
+  /* 1) Imagen primero, debajo del navbar (mas chica y con menos margen
+     que antes, para ganar espacio vertical) */
   .flyVisual {
-    top: 48%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    width: 58vw;
+    position: relative;
+    order: 1;
+    top: auto;
+    right: auto;
+    left: auto;
+    transform: none !important;
+    width: 56vw;
+    max-width: 250px;
+    margin: 64px auto 0;
+  }
+
+  /* 2) Eyebrow + titulo, centrados, sobre la foto oscura */
+  .topBlock {
+    position: relative;
+    order: 2;
+    bottom: auto;
+    padding: 6px 24px 16px;
+    max-width: none;
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .title {
+    margin-bottom: 2px;
+  }
+
+  /* 3) Subtitulo + CTA, sobre fondo crema solido, pegados al titulo
+     para que el CTA quede visible sin tener que hacer mucho scroll */
+  .bottomBlock {
+    position: relative;
+    order: 3;
+    top: auto;
+    padding: 20px 24px 36px;
+    max-width: none;
+    background: #FAF7D4;
+    border-top: 4px solid #e2792c;
+    text-align: center;
+  }
+
+  .subtitle {
+    max-width: 440px;
+    margin: 0 auto 18px;
+  }
+
+  .ctaRow {
+    justify-content: center;
+  }
+
+  .fade {
+    display: none;
   }
 }
 
 @media (max-width: 640px) {
-  .heroSection { min-height: 100svh; }
-  .topBlock { bottom: calc(100% - 56% + 8px); padding-top: 84px; }
-  .bottomBlock { top: calc(56% + 24px); }
-  .flyVisual { top: 44%; width: 66vw; }
-  .fade { height: 120px; }
+  .flyVisual {
+    width: 54vw;
+    max-width: 220px;
+    margin-top: 56px;
+  }
+
+  .topBlock {
+    padding: 4px 20px 12px;
+  }
+
+  .bottomBlock {
+    padding: 16px 20px 32px;
+  }
+
+  .title {
+    font-size: clamp(32px, 8vw, 42px);
+  }
+
+  .subtitle {
+    font-size: 15.5px;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    padding: 12px 24px;
+    font-size: 13px;
+  }
 }
 
 /* ---------- Accesibilidad ---------- */
