@@ -87,6 +87,7 @@
 .subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 16.5px;
+  font-style: italic;
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0.01em;
@@ -277,6 +278,7 @@
   margin: 0;
   color: #ffffff;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  margin-bottom: 30px;
 }
 
 .ctaRow {
@@ -373,10 +375,10 @@
   .heroSection {
     display: flex;
     flex-direction: column;
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100svh; /* usa la altura real visible en móvil, sin la barra del navegador */
     padding-bottom: 0;
   }
-
   .overlay {
     background: linear-gradient(to bottom, rgba(18, 24, 27, 0.55) 10%, rgba(18, 24, 27, 0.8) 100%);
   }
@@ -432,6 +434,10 @@
     background: #FAF7D4;
     border-top: 4px solid #e2792c;
     text-align: center;
+    flex: 1;                 /* ← nuevo: ocupa todo el espacio restante */
+    display: flex;           /* ← nuevo */
+    flex-direction: column;  /* ← nuevo */
+    justify-content: center; /* ← nuevo: centra subtítulo + CTA verticalmente */
   }
 
   .subtitle {

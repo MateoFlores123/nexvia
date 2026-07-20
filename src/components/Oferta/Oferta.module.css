@@ -138,7 +138,7 @@
 
 .titleGold {
   background: linear-gradient(90deg, #f2d27a 0%, #c68a2e 50%, #f2d27a 100%);
-  background-size: 200% auto;
+  background-size: 100% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

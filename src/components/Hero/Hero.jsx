@@ -56,7 +56,7 @@ export default function Hero() {
         <div className={styles.flyEyebrow}>
           <div className={styles.enterEyebrow}>
             <span className={styles.eyebrow}>
-              Importaciones &middot; Embalaje y proteccion
+              Importaciones &middot; Calidad &middot; competitividad
             </span>
           </div>
         </div>
@@ -64,9 +64,9 @@ export default function Hero() {
         <div className={styles.flyTitle}>
           <div className={styles.enterTitle}>
             <h1 className={styles.title}>
-              Protege tu envio.
+              Conectamos mercados
               <br />
-              Llega intacto.
+              Impulsamos negocios
             </h1>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function Hero() {
         <div className={styles.flySubtitle}>
           <div className={styles.enterSubtitle}>
             <p className={styles.subtitle}>
-              Repuestos para transporte pesado desde Arequipa: calidad constante y entregas a tiempo para tu operación.
+              Empresa Arequipeña especializada en repuestos importados para transporte pesado: Calidad constante y entregas a tiempo para tu operación
             </p>
           </div>
         </div>
@@ -94,14 +94,11 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        
       </div>
 
-      {/* --- Imagen: centrada sobre el lado DERECHO de la curva --- */}
-      <div className={styles.flyVisual}>
-        <div className={styles.enterVisual}>
-          <img src={HERO_IMAGE.src} alt={HERO_IMAGE.alt} className={styles.heroImg} />
-        </div>
-      </div>
+      
 
       <div className={styles.fade} />
     </section>

@@ -205,9 +205,9 @@ export default function Oferta() {
               '--fx': '-90px', '--fy': '-90px', '--fr': '-6deg', '--fs': '0.3',
             }}
           >
-            Bolsas de aire y amortiguadores,
+            Bolsas de aire y amortiguadores
             <br />
-            <span className={styles.titleGold}>y el catálogo sigue creciendo</span>
+            <span className={styles.titleGold}>El catálogo sigue creciendo</span>
           </h2>
 
           <p
