@@ -7,8 +7,8 @@ import styles from './Contacto.module.css';
 const WHATSAPP_NUMBER = '51999999999';
 const CONTACT_INFO = {
   phone: '+51 999 999 999',
-  email: 'contacto@nexvia.com',
-  location: 'Lima, Perú',
+  email: 'Comercial@nexvia.com',
+  location: 'Arequipa, Perú',
 };
 
 const initialForm = { nombre: '', apellidos: '', numero: '', mensaje: '' };

@@ -12,7 +12,7 @@
   background-color: #12181b;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
-}
+}x-sizing: border-box;
 
 .heroSection * {
   box-sizing: border-box;
@@ -376,7 +376,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: 100svh; /* usa la altura real visible en móvil, sin la barra del navegador */
+    min-height: auto; /* usa la altura real visible en móvil, sin la barra del navegador */
     padding-bottom: 0;
   }
   .overlay {
@@ -386,9 +386,18 @@
   /* La curva ya no ocupa su propio bloque en movil: consumia espacio vertical
      y empujaba el CTA fuera de la pantalla. En su lugar, el corte queda
      resuelto con un borde naranja arriba de .bottomBlock. */
-  .waveAccent,
+   .waveAccent {
+    display: none; /* evitamos la doble capa en movil, queda mas limpio */
+  }
+
   .wave {
-    display: none;
+    position: relative;
+    inset: auto;
+    order: 3;
+    width: 100%;
+    height: 40px;
+    display: block;
+    margin-bottom: -1px; /* evita una linea de 1px por redondeo de subpixel */
   }
 
   /* 1) Imagen primero, debajo del navbar (mas chica y con menos margen
@@ -425,24 +434,19 @@
 
   /* 3) Subtitulo + CTA, sobre fondo crema solido, pegados al titulo
      para que el CTA quede visible sin tener que hacer mucho scroll */
-  .bottomBlock {
+   .bottomBlock {
     position: relative;
-    order: 3;
+    order: 4;
     top: auto;
-    padding: 20px 24px 36px;
+    padding: 8px 24px 32px;   /* antes 20px 24px 36px, y sin flex:1 que la estiraba */
     max-width: none;
     background: #FAF7D4;
-    border-top: 4px solid #e2792c;
     text-align: center;
-    flex: 1;                 /* ← nuevo: ocupa todo el espacio restante */
-    display: flex;           /* ← nuevo */
-    flex-direction: column;  /* ← nuevo */
-    justify-content: center; /* ← nuevo: centra subtítulo + CTA verticalmente */
   }
 
   .subtitle {
     max-width: 440px;
-    margin: 0 auto 18px;
+    margin: 0 auto 16px;
   }
 
   .ctaRow {
